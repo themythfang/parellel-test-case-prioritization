@@ -1,9 +1,8 @@
 #ifndef CONF_H_
 #define CONF_H_
 
-//修改标准Ini文件的读写的类
-//主要参考http://www.codeproject.com/KB/files/CIniFile.aspx
-//tjl20082008@163.com
+// Source code url:
+// http://www.codeproject.com/KB/files/CIniFile.aspx
 #include <string>
 #include <vector>
 #include <iostream>
