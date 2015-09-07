@@ -95,6 +95,15 @@ void OrderGetSonGene(int p1, int p2, int s, int rand1, int rand2) {
       }
     }
   }
+
+  /*
+  cout << rand1 << " " << rand2 << endl;
+  for (int i = 0; i < test_num; ++i) {
+    cout << pop_vec[s].gene_code_vec[i] << " ";
+  }
+  cout << endl;
+  getchar();
+  */
 }
 
 void OrderCrossOver() {
@@ -109,6 +118,10 @@ void OrderCrossOver() {
     rand2 = random() % test_num;
     while (rand2 == rand1) {
       rand2 = random() % test_num;
+    }
+
+    if (rand1 > rand2) {
+      swap(rand1, rand2);
     }
 
     OrderGetSonGene(p1, p2, s1, rand1, rand2);
