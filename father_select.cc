@@ -24,11 +24,16 @@ void FatherSelect(int num) {
     double rand = random() * 1.0 / RAND_MAX;
     // in case of float number computation error
     father_sel_vec[i] = pop_num - 1;
+
+    int flag = 0;
     for (int j = 0; j < pop_num; ++j) {
       if (rand < apsc_map[j]) {
 	father_sel_vec[i] = j;
 	break;
       }
+    }
+    if (flag == 0) {
+      father_sel_vec[i] = pop_num - 1;
     }
   }
 }
