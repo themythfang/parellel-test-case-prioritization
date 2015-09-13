@@ -59,7 +59,7 @@ void InitPop() {
     pop_vec[i].first_exe_vec.assign(code_num, test_num);
     pop_vec[i].pos_vec.resize(test_num);
     pop_vec[i].flags_vec.resize(test_num);
-    pop_vec[i].single_pos_vec.resize(test_num);
+    //    pop_vec[i].single_pos_vec.resize(test_num);
   }
   cout << 2 << endl;
   GenRandPop(0, pop_num);

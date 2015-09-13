@@ -1,7 +1,7 @@
 #ifndef CONF_H_
 #define CONF_H_
 
-// Source code url:
+// Source code url.
 // http://www.codeproject.com/KB/files/CIniFile.aspx
 #include <string>
 #include <vector>

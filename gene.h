@@ -35,6 +35,10 @@ struct Individual {
   int dom_num;
   // The front number of this individual.
   int front_num;
+
+  // The Crowd Distance.
+  double crowd_dis;
+
   // The min block that need to execute.
   vector<int> first_exe_vec;
   // The struct that "SCAN ALGORITHM" uses.

@@ -53,6 +53,8 @@ void InitPop() {
   pop_vec.resize(pop_num << 1);
   temp_pop_vec.resize(pop_num);
   for (int i = 0; i < (pop_num << 1); ++i) {
+    cout << i << endl;
+
     pop_vec[i].gene_code_vec.resize(test_num);
 
     pop_vec[i].first_exe_vec.resize(code_num);
@@ -60,7 +62,7 @@ void InitPop() {
     pop_vec[i].first_exe_vec.assign(code_num, test_num);
     pop_vec[i].pos_vec.resize(test_num);
     pop_vec[i].flags_vec.resize(test_num);
-    pop_vec[i].single_pos_vec.resize(test_num);
+    //    pop_vec[i].single_pos_vec.resize(test_num);
   }
   cout << 2 << endl;
   GenRandPop(0, pop_num);

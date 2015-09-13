@@ -98,10 +98,13 @@ void OrderGetSonGene(int p1, int p2, int s, int rand1, int rand2) {
 
   /*
   cout << rand1 << " " << rand2 << endl;
+  int count = 0;
   for (int i = 0; i < test_num; ++i) {
-    cout << pop_vec[s].gene_code_vec[i] << " ";
+    count += pop_vec[s].gene_code_vec[i];
+    //    cout << pop_vec[s].gene_code_vec[i] << " ";
   }
-  cout << endl;
+  //  cout << endl;
+  cout << (0 + test_num - 1) * test_num / 2 << " " << count << endl;
   getchar();
   */
 }
@@ -112,6 +115,8 @@ void OrderCrossOver() {
     int s2 = s1 + 1;
     int p1 = father_sel_vec[i * 2];
     int p2 = father_sel_vec[i * 2 + 1];
+
+    cout << "P: " << p1 << " " << p2 << endl;
 
     int rand1, rand2;
     rand1 = random() % test_num;

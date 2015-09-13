@@ -32,6 +32,10 @@ int cur_gen_num;
 int code_num_set = 0;
 int test_num_set = 0;
 
+double best_eet = -1;
+double best_apsc = -1;
+int stable_count = 0;
+
 // The output directory.
 // The final output file will be the format
 // $out_dir + $cur_gen_dir + file_name

@@ -1,11 +1,9 @@
 #include "conf.h"
 
-CIceIniFile::CIceIniFile(void)													// Default constructor
-{
+CIceIniFile::CIceIniFile(void) {
 }
 
-CIceIniFile::~CIceIniFile(void)
-{
+CIceIniFile::~CIceIniFile(void) {
 }
 
 // A function to trim whitespace from both sides of a given string

@@ -6,4 +6,6 @@ using namespace std;
 
 void FatherSelect(int num);
 
+void TourSelect(int num);
+
 #endif // FATHER_SELECT_H_

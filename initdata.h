@@ -12,6 +12,7 @@
 #define CMD_LEN 256
 #define MAX_NUM 1000000000
 #define MIN_NUM -1000000000
+#define STABLE_COUNT 5
 #define NOEXIST -1
 
 // the iteration of the algorithm.
@@ -31,6 +32,12 @@ extern string time_file;
 
 extern int cur_ite_num;
 extern int cur_gen_num;
+
+// flags to judge whether the algorithm is stable. 
+extern double best_eet;
+extern double best_apsc;
+// The number of successive stable iterations.
+extern int stable_count;
 
 // Output files
 extern string out_dir;

@@ -49,7 +49,6 @@ int main() {
     cout << "out_dir: " << out_dir << endl;
     cout << cov_file << endl;
     cout << time_file << endl;
-    getchar();
     
     TimeRecord initialize_data_rec(out_dir + initialize_data_file);
     TimeRecord initialize_cuda_rec(out_dir + "initialize_cuda_file");
@@ -58,9 +57,9 @@ int main() {
     initialize_data_rec.Start();
 
 #ifdef CUDA_CROSS
-    if (CudaInitData(initialize_cuda_rec) == 0) {
+    if (CudaInitData(initialize_cuda_rec) != 0) {
 #elif defined CUDA_FITNESS
-    if (CudaInitData(initialize_cuda_rec) == 0) {
+    if (CudaInitData(initialize_cuda_rec) != 0) {
 #else
     if (InitData() != 0) {
 #endif
@@ -71,6 +70,10 @@ int main() {
     initialize_data_rec.Record();
     
     for (int i = 0; i < ite_num; ++i) {
+      // No best apsc and eet in the beginning.
+      best_apsc = best_eet = -1;
+      stable_count = 0;
+
       cur_ite_num = i;
       char buf[128];
       sprintf(buf, "%d//", cur_ite_num);
@@ -109,41 +112,6 @@ int main() {
 #endif
       initialize_pop_rec.Record();
 
-      /*      
-      vector<double> t_apsc;
-      vector<double> t_time;
-      vector<int> t_total;
-      vector<int> t_first;
-      vector<int> t_list;
-      
-      t_apsc.resize(pop_num << 1);
-      t_time.resize(pop_num << 1);
-      t_total.resize(pop_num << 1);
-      t_first.resize(pop_num * code_num * 2);
-      t_list.resize(pop_num * 3);
-      
-      for (int q = 0; q < pop_num; ++q) {
-        for (int k = 0; k < code_num; ++k) {
-          t_first[q * code_num + k] = pop_vec[q].first_exe_vec[k];
-        }
-      }
-      
-      first_comp_fit_rec.Start();
-      CompFit(0, pop_num);
-      first_comp_fit_rec.Record();
-      
-      for (int q = 0; q < pop_num; ++q) {
-        for (int k = 0; k < code_num; ++k) {
-          if (t_first[q * code_num + k] != pop_vec[q].first_exe_vec[k]) {
-            cout << "Init Wrong" << endl;
-            cout << q << " " << k << endl;
-            cout << t_first[q * code_num + k] << " " << pop_vec[q].first_exe_vec[k] << endl;
-          }
-        }
-      }
-      cout << "Init Right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-      */
-
       cur_ite_num = i;
       
       for (int j = 0; j < gen_num; ++j) {
@@ -151,11 +119,11 @@ int main() {
         cout << "j: " << j << endl;
         cout << "FatherSelect();" << endl;
         father_select_rec.Start();
-        FatherSelect(pop_num);
+        //        FatherSelect(pop_num);
+        TourSelect(pop_num);
         father_select_rec.Record();
         
         cout << "CrossOver();" << endl;
-        
         
         //      SinglePointCrossover();
 #ifdef CUDA_CROSS
@@ -175,62 +143,35 @@ int main() {
         cout << "CompFit();" << endl;
 
 #ifdef CUDA_FITNESS
+        cout << "CudaCompFit2" << endl;
         CudaCompFit2(cuda_comp_fit_rec, cuda_comp_fit_in_rec, cuda_comp_fit_out_rec, pop_num);
+        //        IsStable();
 #else
         comp_fit_rec.Start();
         CompFit(pop_num, pop_num);
         comp_fit_rec.Record();
 #endif
 
-
-        /*          
-        cout << "Save" << endl;
-        cout << pop_num << endl;
-        for (int k = pop_num; k < (pop_num << 1); ++k) {
-          t_apsc[k] = pop_vec[k].apsc;
-          t_time[k] = pop_vec[k].eff_time;
-        }
-          
-        for (int q = 0; q < pop_num * 2; ++q) {
-          for (int k = 0; k < code_num; ++k) {
-            t_first[q * code_num + k] = pop_vec[q].first_exe_vec[k];
-          }
-        }
-        
-        CudaCompFit2(cuda_comp_fit_rec, pop_num);
-        
-        for (int q = 0; q < pop_num * 2; ++q) {
-          for (int k = 0; k < code_num; ++k) {
-            if (t_first[q * code_num + k] != pop_vec[q].first_exe_vec[k]) {
-              cout << "Compt Wrong" << endl;
-                cout << q << " " << k << endl;
-                cout << t_first[q * code_num + k] << " " << pop_vec[q].first_exe_vec[k] << endl;
-                getchar();
-            }
-          }
-        }
-        cout << "Comp Right!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
-        cout << "Count" << endl;
-        */
-
         elite_rec.Start();
-        NonDomSort(0, pop_num << 1);
+
         ElismSelect();
         elite_rec.Record();
         
         cout << "ElismSelect()" << endl;
+
+        if (IsStable()) {
+          break;
+        }
       }
 
       cout << "End for" << endl;
       LogFront0(front0_rec);
-      front0_rec.Comment("\n");
     }
 #ifdef CUDA_CROSS
     CudaDeleteData();
 #elif defined CUDA_FITNESS
     CudaDeleteData();
 #endif
-
   }
   cout << "Real End" << endl;
   return 0;

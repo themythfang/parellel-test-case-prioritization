@@ -4,4 +4,6 @@
 
 void LogFront0(TimeRecord& c);
 
+int IsStable();
+
 #endif // LOG_FRONT0_H_
