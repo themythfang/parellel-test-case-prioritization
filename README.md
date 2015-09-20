@@ -5,7 +5,10 @@ Copyright © 2015, Yuan Fang.
 
 # How to start
  $ git clone https://github.com/themythfang/parellel-test-case-prioritization
+ 
  $ cd parellel-test-case-prioritization
+ 
  $ make 
+ 
  $ ./nsag2
  
